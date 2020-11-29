@@ -3,7 +3,8 @@ canv        = document.querySelector('#canvas'),
 ctx         = canv.getContext("2d");
 
 var
-  pen         = document.querySelector('#pen'),
+  pencil      = document.querySelector('#pencil'),
+  brush       = document.querySelector('#brush');
   eraser      = document.querySelector('#eraser'),
   structure   = document.querySelector('#structure'),
   circle      = document.querySelector('#circle'),
@@ -12,40 +13,104 @@ var
 
 var
   colorBg     = document.querySelector('#bgColor'),
-  sizePen     = document.querySelector('#sizePen'),
+  sizePen     = document.querySelector('#inprange'),
   colorPen    = document.querySelector('#penColor');
 
+var
+  isMouseDown = false;
+  isMouseDown1 = false;
+  
   canv.width = window.innerWidth;  
-canv.height = window.innerHeight - 90; 
+  canv.height = window.innerHeight - 90; 
+  
+  canv.style.background = colorBg.value;
+  
+  
+  // structure.addEventListener('mousedown', function structure(){
+    //   canv.addEventListener('mousedown', function(e){
+      //     ctx.fillStyle = colorPen.value; // Цвет квадрата по стандарту черн 
+      //     ctx.arc(e.clientX, e.clientY, 30, 0, Math.PI * 2);
+      //     ctx.fill();
+      //   });
+      // });
+      
+      // Круг 
+      
+      // mouse
+    circle.addEventListener('mousedown', function circleMouse(){
+      canv.addEventListener('mousedown', function(e){
+        ctx.fillStyle = colorPen.value; // Color
+        ctx.beginPath();
+        ctx.arc(e.clientX, e.clientY, sizePen.value, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    });
 
+  // touch
+  circle.addEventListener('touchstart', function circleTouch(){
+    canv.addEventListener('touchstart', function(e){
+      ctx.fillStyle = colorPen.value; 
+      ctx.beginPath();
+      ctx.arc(e.clientX, e.clientY, sizePen.value, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  });
 
+// // Карандаш 
+//   pencil.addEventListener('mousedown', function pencilMouse(){
 
+//     canv.addEventListener('mousedown', function() {
+//       isMouseDown   = true;
+//     })
 
-// structure.addEventListener('mousedown', function structure(){
-//   canv.addEventListener('mousedown', function(e){
-//     ctx.fillStyle = colorPen.value; // Цвет квадрата по стандарту черн 
-//     ctx.arc(e.clientX, e.clientY, 30, 0, Math.PI * 2);
-//     ctx.fill();
+//     canv.addEventListener('mouseup', function() {
+//       isMouseDown   = false;
+//     })
+
+//     canv.addEventListener('mousemove', function(e){
+//       ctx.fillStyle = colorPen.value; // Color
+
+//       if( isMouseDown )
+//       {
+//         ctx.lineTo(e.clientX, e.clientY);
+//         ctx.stroke();
+
+//         ctx.beginPath();
+//         ctx.moveTo(e.clientX, e.clientY)
+//       }
+//     });
 //   });
-// });
 
-// mouse
+// Кисть
 
-circle.addEventListener('mousedown', function circleMouse(){
-  canv.addEventListener('mousedown', function(e){
-    ctx.fillStyle = colorPen.value; // Цвет квадрата по стандарту черн 
-    ctx.beginPath();
-    ctx.arc(e.clientX, e.clientY, 30, 0, Math.PI * 2);
-    ctx.fill();
+  // mouse
+  brush.addEventListener('mousedown', function brushMouse(){
+
+    canv.addEventListener('mousedown', function() {
+      isMouseDown   = true;
+    })
+
+    canv.addEventListener('mouseup', function() {
+      isMouseDown   = false;
+      ctx.beginPath();
+    })
+
+    ctx.lineWidth   = sizePen.value * 2;
+    canv.addEventListener('mousemove', function(e){
+      ctx.fillStyle = colorPen.value; // Color
+
+      if( isMouseDown )
+      {
+        ctx.lineTo(e.clientX, e.clientY);
+        ctx.strokeStyle = colorPen.value;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(e.clientX, e.clientY, sizePen.value, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(e.clientX, e.clientY)
+      }
+    });
   });
-});
-
-// touch
-circle.addEventListener('touchstart', function circleTouch(){
-  canv.addEventListener('touchstart', function(e){
-    ctx.fillStyle = colorPen.value; // Цвет квадрата по стандарту черн 
-    ctx.beginPath();
-    ctx.arc(e.clientX, e.clientY, 30, 0, Math.PI * 2);
-    ctx.fill();
-  });
-});
