@@ -1,0 +1,52 @@
+$iconcolor: #6A56E8;
+$bgcolor: #131318;
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    font-family: 'Varela Round', sans-serif;
+}
+
+p{
+    color: $iconcolor;
+    font-size: 30px;
+}
+
+.maxline{
+    background: $bgcolor;
+    width: 100%;
+}
+
+.items{
+    display: flex;
+    justify-content: space-around;
+    padding: 7px;
+}
+
+.inpcolor{
+    cursor: pointer;
+    background: $iconcolor;
+    padding: 3px;
+    border: none;
+    border-radius: 50px;
+    width: 35px;
+    height: 35px;
+}   
+
+.header{
+    .item{
+        cursor: pointer;
+        color: $iconcolor;
+    }
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    .inprange{
+    }
+}
